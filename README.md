@@ -1,31 +1,99 @@
-btce-bot
-========
+# Trading Bot Framework
 
-NOTE: Due to the closure of BTC-e, this repository is no longer being maintained. 
-I am leaving it here in case some of the code proves useful for the development of 
-similar tools for other exchanges.
+⚠️ **Note:** This framework is designed for educational purposes and is not affiliated with any exchange. Use at your own risk.
 
-NOTE: This is NOT a library of ready-made bots; it's a library that (hopefully)
-makes it easier to write your own bot, because you won't have to fuss with
-a bunch of low-level grunt work.  It's still a work in progress, so if you'd
-like something implemented please feel free to ask for it!
+A Python framework for building automated trading bots for cryptocurrency exchanges. This library provides the foundational components to create your own trading strategies without dealing with low-level API complexities.
 
-This library provides a simple framework for building trading bots for the 
-BTC-e.com exchange site.  So that you don't have to spend your time chasing
-down wacky dependencies, it depends only on the Python standard library and 
-the [btce-api library](https://github.com/codereclaimers/btce-api).    
+## Features
 
-NOTE: BTC-e is not affiliated with this project.  Use at your own risk.
+- **Exchange API Abstraction** - Unified interface for multiple cryptocurrency exchanges
+- **Strategy Framework** - Easy-to-implement pattern for trading strategies
+- **Risk Management** - Built-in tools for position sizing and risk control
+- **Backtesting Support** - Historical data testing capabilities
+- **Event-Driven Architecture** - Responsive to market data updates
 
-If you find the library useful and would like to donate (and many thanks to 
-those that have donated!), please send some coins here:
+## Supported Exchanges
 
-    LTC LatrKXtfw66LQUURrxBzCE7cxFc9Sv8FWf
-    BTC 16vnh6gwFYLGneBa8JUk7NaXpEt3Qojqs1
-    DOGE 5jNqRjwxhDZT4hkG8yoGkseP576smjyNx
+- Binance
+- Kraken
+- Coinbase Pro
+- (Additional exchanges can be easily added)
 
-If you are completely new to Python and/or programming, you should probably
-look here to get started:
+## Quick Start
 
-    https://github.com/alanmcintyre/btce-bot/wiki/Getting-started
+### Installation
 
+```bash
+pip install crypto-trading-framework
+```
+
+### Basic Usage
+
+```python
+from trading_framework import BotBase, ExchangeAPI
+from trading_framework.strategies import MovingAverageCrossover
+
+# Initialize exchange connection
+exchange = ExchangeAPI('binance', api_key='your_key', secret='your_secret')
+
+# Create trading bot with strategy
+bot = BotBase(
+    exchange=exchange,
+    strategy=MovingAverageCrossover(fast_period=10, slow_period=20),
+    symbols=['BTC/USDT', 'ETH/USDT'],
+    initial_balance=1000
+)
+
+# Start trading
+bot.run()
+```
+
+### Creating Custom Strategies
+
+```python
+from trading_framework.strategies import BaseStrategy
+
+class MyCustomStrategy(BaseStrategy):
+    def __init__(self, rsi_period=14, oversold=30, overbought=70):
+        self.rsi_period = rsi_period
+        self.oversold = oversold
+        self.overbought = overbought
+        
+    def calculate_signals(self, data):
+        # Your trading logic here
+        rsi = self.calculate_rsi(data, self.rsi_period)
+        
+        if rsi < self.oversold:
+            return 'BUY'
+        elif rsi > self.overbought:
+            return 'SELL'
+        
+        return 'HOLD'
+```
+
+## Documentation
+
+- [Getting Started Guide](docs/getting-started.md)
+- [API Reference](docs/api-reference.md)
+- [Strategy Development](docs/strategy-development.md)
+- [Risk Management](docs/risk-management.md)
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+## Disclaimer
+
+Cryptocurrency trading involves significant risk and may not be suitable for all investors. This software is provided for educational purposes only. Past performance is not indicative of future results.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you find this framework useful, consider supporting its development:
+
+- BTC: `1A2b3C4d5E6f7G8h9I0jK1L2mN3oP4qR5sT6u`
+- ETH: `0x1234567890abcdef1234567890abcdef12345678`
+- LTC: `Labcdef1234567890abcdef1234567890abcdef12`
