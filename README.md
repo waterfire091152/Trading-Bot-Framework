@@ -1,7 +1,5 @@
 # Trading Bot Framework
 
-⚠️ **Note:** This framework is designed for educational purposes and is not affiliated with any exchange. Use at your own risk.
-
 A Python framework for building automated trading bots for cryptocurrency exchanges. This library provides the foundational components to create your own trading strategies without dealing with low-level API complexities.
 
 ## Features
